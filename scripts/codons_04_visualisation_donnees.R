@@ -4,6 +4,7 @@
 
 # Charger le Tidyverse ----
 
+library(animation)
 library(tidyverse)
 
 # Definir le repertoire de travail ----
@@ -25,6 +26,38 @@ ggplot(data = pingouins,
        y = "Nombre")
 
 # Nuage de points ----
+
+p1 <- ggplot(data = pingouins)
+
+p2 <- ggplot(data = pingouins,
+             aes(x = bec_lng_mm, y = bec_htr_mm))
+
+p3 <- ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point()
+
+p4 <- ggplot(data = pingouins,
+             aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(aes(colour = espece))
+
+p5 <- ggplot(data = pingouins,
+             aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(aes(colour = espece),
+             size = 2)
+
+p6 <- ggplot(data = pingouins,
+             aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(aes(colour = espece),
+             size = 2, alpha = 0.8)
+
+saveGIF({
+  print(p1)
+  print(p2)
+  print(p3)
+  print(p4)
+  print(p5)
+  print(p6)
+}, interval = 2, movie.name = "test.gif", ani.width = 1800, ani.height = 1050, ani.res = 300)
 
 ggplot(data = pingouins,
        aes(x = bec_lng_mm, y = bec_htr_mm)) +
