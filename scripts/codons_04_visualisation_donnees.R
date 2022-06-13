@@ -27,15 +27,31 @@ pingouins <- readr::read_csv("https://raw.githubusercontent.com/codons-blog/C-04
 (f1 <- ggplot(data = pingouins))
 
 (t1 <- ggplot() +
-  geom_text(family = "source", hjust = 0, aes(x = 0, y = 10, label = "ggplot(data = pingouins)")) +
+  geom_text(family = "source", hjust = 0, size = 10, aes(x = 0, y = 10, label = "ggplot(data = pingouins)")) +
   xlim(c(0, 1)) +
   ylim(c(0, 10)) +
   theme_void())
 
 (p1 <- t1 + f1 +
-    patchwork::plot_layout(widths = c(1.2, 1.8)))
+    patchwork::plot_layout(widths = c(1, 2)))
 
 ggsave("fig1.png", p1, dpi = 320, width = 12, height = 6)
+
+(f2 <- ggplot(data = pingouins) +
+  aes(x = bec_lng_mm,
+      y = bec_htr_mm))
+
+(t2 <- ggplot() +
+    geom_text(family = "source", hjust = 0, size = 10, aes(x = 0, y = 10, label = "ggplot(data = pingouins) + ")) +
+    geom_text(family = "source", hjust = 0, size = 10, aes(x = 0.25, y = 9, label = "aes(x = bec_lng_mm, y = bec_htr_mm)")) +
+    xlim(c(0, 1)) +
+    ylim(c(0, 10)) +
+    theme_void())
+
+(p2 <- t2 + f2 +
+    patchwork::plot_layout(widths = c(1, 2)))
+
+ggsave("fig2.png", p2, dpi = 320, width = 12, height = 6)
 
 ggplot(data = pingouins) +
   annotate(x = 0, y = 0, "ggplot(data = pingouins)")
