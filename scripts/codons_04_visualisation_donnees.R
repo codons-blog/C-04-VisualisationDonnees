@@ -5,7 +5,14 @@
 # Charger le Tidyverse ----
 
 library(animation)
+library(patchwork)
+library(showtext)
 library(tidyverse)
+
+# Charger les polices ----
+
+font_add_google(name = "Source Code Pro", family = "source")
+showtext_auto()
 
 # Definir le repertoire de travail ----
 
@@ -17,7 +24,21 @@ pingouins <- readr::read_csv("https://raw.githubusercontent.com/codons-blog/C-04
 
 # Nuage de points - etape par etape ----
 
-p1 <- ggplot(data = pingouins)
+(f1 <- ggplot(data = pingouins))
+
+(t1 <- ggplot() +
+  geom_text(family = "source", hjust = 0, aes(x = 0, y = 10, label = "ggplot(data = pingouins)")) +
+  xlim(c(0, 1)) +
+  ylim(c(0, 10)) +
+  theme_void())
+
+(p1 <- t1 + f1 +
+    patchwork::plot_layout(widths = c(1.2, 1.8)))
+
+ggsave("fig1.png", p1, dpi = 320, width = 12, height = 6)
+
+ggplot(data = pingouins) +
+  annotate(x = 0, y = 0, "ggplot(data = pingouins)")
 
 p2 <- ggplot(data = pingouins,
        mapping = aes(x = bec_lng_mm,
