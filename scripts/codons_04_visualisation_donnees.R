@@ -22,316 +22,107 @@ setwd("D:/codons/C-04-VisualisationDonnees")
 
 pingouins <- readr::read_csv("https://raw.githubusercontent.com/codons-blog/C-04-VisualisationDonnees/main/data/pingouins.csv")
 
-# Nuage de points - etape par etape ----
+# ggplot basique - etape par etape ----
+
+# 1 - initialiser le plot
 
 (f1 <- ggplot(data = pingouins))
 
 (t1 <- ggplot() +
-  geom_text(family = "source", hjust = 0, size = 10, aes(x = 0, y = 10, label = "ggplot(data = pingouins)")) +
-  xlim(c(0, 1)) +
-  ylim(c(0, 10)) +
-  theme_void())
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data = pingouins) + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x = bec_lng_mm, y = bec_htr_mm) +")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9, label = "geom_point() + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 8.5, label = "theme_light()")) +
+    geom_rect(aes(xmin = 0, xmax = 0.98, ymin = 9.8, ymax = 10.2), fill = "#00a3a6", colour = NA, alpha = 0.3) +
+    xlim(c(0, 1)) +
+    ylim(c(0, 10.5)) +
+    theme_void())
 
 (p1 <- t1 + f1 +
-    patchwork::plot_layout(widths = c(1, 2)))
+    patchwork::plot_layout(widths = c(1.3, 1.7)))
 
 ggsave("fig1.png", p1, dpi = 320, width = 12, height = 6)
 
+# 2 - aes()
+
 (f2 <- ggplot(data = pingouins) +
   aes(x = bec_lng_mm,
-      y = bec_htr_mm))
+      y = bec_htr_mm) +
+    theme(axis.title = element_text(size = 20),
+          axis.text = element_text(size = 20)))
 
 (t2 <- ggplot() +
-    geom_text(family = "source", hjust = 0, size = 10, aes(x = 0, y = 10, label = "ggplot(data = pingouins) + ")) +
-    geom_text(family = "source", hjust = 0, size = 10, aes(x = 0.25, y = 9, label = "aes(x = bec_lng_mm, y = bec_htr_mm)")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data = pingouins) + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x = bec_lng_mm, y = bec_htr_mm) +")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9, label = "geom_point() + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 8.5, label = "theme_light()")) +
+    geom_rect(aes(xmin = 0, xmax = 0.98, ymin = 9.3, ymax = 9.7), fill = "#00a3a6", colour = NA, alpha = 0.3) +
     xlim(c(0, 1)) +
-    ylim(c(0, 10)) +
+    ylim(c(0, 10.5)) +
     theme_void())
 
 (p2 <- t2 + f2 +
-    patchwork::plot_layout(widths = c(1, 2)))
+    patchwork::plot_layout(widths = c(1.3, 1.7)))
 
 ggsave("fig2.png", p2, dpi = 320, width = 12, height = 6)
 
-ggplot(data = pingouins) +
-  annotate(x = 0, y = 0, "ggplot(data = pingouins)")
+# 3 - geom()
 
-p2 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm))
+(f3 <- ggplot(data = pingouins) +
+    aes(x = bec_lng_mm,
+        y = bec_htr_mm) +
+    geom_point() +
+    theme(axis.title = element_text(size = 20),
+          axis.text = element_text(size = 20)))
 
-p3 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point()
+(t3 <- ggplot() +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data = pingouins) + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x = bec_lng_mm, y = bec_htr_mm) +")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9, label = "geom_point() + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 8.5, label = "theme_light()")) +
+    geom_rect(aes(xmin = 0, xmax = 0.98, ymin = 8.8, ymax = 9.2), fill = "#00a3a6", colour = NA, alpha = 0.3) +
+    xlim(c(0, 1)) +
+    ylim(c(0, 10.5)) +
+    theme_void())
 
-p4 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece))
+(p3 <- t3 + f3 +
+    patchwork::plot_layout(widths = c(1.3, 1.7)))
 
-p5 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2)
+ggsave("fig3.png", p3, dpi = 320, width = 12, height = 6)
 
-p6 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8)
+# 4 - theme()
 
-p7 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4"))
+(f4 <- ggplot(data = pingouins) +
+    aes(x = bec_lng_mm,
+        y = bec_htr_mm) +
+    geom_point() +
+    theme_light() +
+    theme(axis.title = element_text(size = 20),
+          axis.text = element_text(size = 20)))
 
-p8 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins")
+(t4 <- ggplot() +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data = pingouins) + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x = bec_lng_mm, y = bec_htr_mm) +")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9, label = "geom_point() + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 8.5, label = "theme_light()")) +
+    geom_rect(aes(xmin = 0, xmax = 0.98, ymin = 8.3, ymax = 8.7), fill = "#00a3a6", colour = NA, alpha = 0.3) +
+    xlim(c(0, 1)) +
+    ylim(c(0, 10.5)) +
+    theme_void())
 
-p9 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)")
+(p4 <- t4 + f4 +
+    patchwork::plot_layout(widths = c(1.3, 1.7)))
 
-p10 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)")
+ggsave("fig4.png", p4, dpi = 320, width = 12, height = 6)
 
-p11 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)")
-
-p12 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light()
-
-p13 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank())
-
-
-p14 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5))
-
-p15 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5,
-                                  margin = margin(t = 10, b = 5)))
-
-p16 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5,
-                                  margin = margin(t = 10, b = 5)),
-        plot.subtitle = element_text(hjust = 0.5))
-
-p17 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5,
-                                  margin = margin(t = 10, b = 5)),
-        plot.subtitle = element_text(hjust = 0.5,
-                                     margin = margin(b = 20)))
-
-p18 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5,
-                                  margin = margin(t = 10, b = 5)),
-        plot.subtitle = element_text(hjust = 0.5,
-                                     margin = margin(b = 20)),
-        axis.title.x = element_text(margin = margin(t = 10)))
-
-p19 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5,
-                                  margin = margin(t = 10, b = 5)),
-        plot.subtitle = element_text(hjust = 0.5,
-                                     margin = margin(b = 20)),
-        axis.title.x = element_text(margin = margin(t = 10)),
-        axis.title.y = element_text(margin = margin(r = 10)))
-
-p20 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5,
-                                  margin = margin(t = 10, b = 5)),
-        plot.subtitle = element_text(hjust = 0.5,
-                                     margin = margin(b = 20)),
-        axis.title.x = element_text(margin = margin(t = 10)),
-        axis.title.y = element_text(margin = margin(r = 10)),
-        legend.position = "top")
-
-p21 <- ggplot(data = pingouins,
-       mapping = aes(x = bec_lng_mm,
-                     y = bec_htr_mm)) +
-  geom_point(mapping = aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(title = "Dimensions du bec pour trois espèces de pingouins",
-       subtitle = "Sur trois îles de l'archipel Palmer (Antarctique)",
-       x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)") +
-  theme_light() +
-  theme(panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5,
-                                  margin = margin(t = 10, b = 5)),
-        plot.subtitle = element_text(hjust = 0.5,
-                                     margin = margin(b = 20)),
-        axis.title.x = element_text(margin = margin(t = 10)),
-        axis.title.y = element_text(margin = margin(r = 10)),
-        legend.position = "top",
-        legend.title = element_blank())
+# GIF 
 
 saveGIF({
   print(p1)
   print(p2)
   print(p3)
   print(p4)
-  print(p5)
-  print(p6)
-  print(p7)
-  print(p8)
-  print(p9)
-  print(p10)
-  print(p11)
-  print(p12)
-  print(p13)
-  print(p14)
-  print(p15)
-  print(p16)
-  print(p17)
-  print(p18)
-  print(p19)
-  print(p20)
-  print(p21)
-}, interval = 1, movie.name = "test.gif", ani.width = 1800, ani.height = 1050, ani.res = 300)
+}, interval = 2, movie.name = "ggplot_01.gif", ani.width = 1800, ani.height = 1050, ani.res = 300)
 
 
 
