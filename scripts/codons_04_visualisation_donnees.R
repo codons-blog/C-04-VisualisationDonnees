@@ -128,95 +128,88 @@ saveGIF({
 
 # Histogramme ----
 
-ggplot(data = pingouins,
-       aes(x = bec_lng_mm)) +
-  geom_histogram(colour = "blue", fill = "lightblue") +
-  geom_vline(aes(xintercept = mean(bec_lng_mm)),
-             colour = "red", linetype = "dashed", size = 1) +
-  labs(x = "Longueur des ailes (mm)",
-       y = "Nombre")
+hist1 <- ggplot(data = pingouins,
+       aes(x = aile_lng_mm)) +
+  geom_histogram()
 
-# Nuage de points ----
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist1.png", hist1, dpi = 320, width = 12, height = 6)
 
-library(patchwork)
+hist2 <- ggplot(data = pingouins,
+       aes(x = aile_lng_mm)) +
+  geom_histogram(colour = "blue", fill = "white")
 
-p1 <- ggplot(data = pingouins)
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist2.png", hist2, dpi = 320, width = 12, height = 6)
 
-c1 <- ggplot() +
-  geom_text(aes(x = 0, y = 10, label = "ggplot(data = pingouins)"),
-            hjust = 0) +
-  xlim(c(0, 10)) +
-  ylim(c(0, 10)) +
-  theme_void()
+hist3 <- ggplot(data = pingouins,
+                aes(x = aile_lng_mm)) +
+  geom_histogram(colour = "blue", fill = "white") +
+  labs(title = "Longueur des ailes pour trois espèces de pingouins",
+       subtitle = "Sur trois iles de l'archipel Palmer (Antarctique)",
+       x = "Longueur des ailes (mm)",
+       y = "Frequence")
 
-g1 <- c1 + p1 +
-  patchwork::plot_layout(widths = c(1, 2))
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist3.png", hist3, dpi = 320, width = 12, height = 6)
 
-p2 <- ggplot(data = pingouins,
-             aes(x = bec_lng_mm, y = bec_htr_mm))
-
-c2 <- ggplot() +
-  geom_text(aes(x = 0, y = 10, label = "ggplot(data = pingouins, mapping = aes(x = bec_lng_mm, y = bec_htr_mm)"),
-            hjust = 0) +
-  geom_text(aes(x = 5, y = 9, label = ""),
-            hjust = 0) +
-  xlim(c(0, 10)) +
-  ylim(c(0, 10)) +
-  theme_void()
-
-g2 <- c2 + p2 +
-  patchwork::plot_layout(widths = c(1, 2))
-
-p3 <- ggplot(data = pingouins,
-       aes(x = bec_lng_mm, y = bec_htr_mm)) +
-  geom_line()
-
-p4 <- ggplot(data = pingouins,
-             aes(x = bec_lng_mm, y = bec_htr_mm)) +
-  geom_point(aes(colour = espece))
-
-p5 <- ggplot(data = pingouins,
-             aes(x = bec_lng_mm, y = bec_htr_mm)) +
-  geom_point(aes(colour = espece),
-             size = 2)
-
-p6 <- ggplot(data = pingouins,
-             aes(x = bec_lng_mm, y = bec_htr_mm)) +
-  geom_point(aes(colour = espece),
-             size = 2, alpha = 0.8)
+hist4 <- ggplot(data = pingouins,
+       aes(x = aile_lng_mm,
+           fill = espece)) +
+  geom_histogram(position = "identity") +
+  labs(title = "Longueur des ailes pour trois espèces de pingouins",
+       subtitle = "Sur trois iles de l'archipel Palmer (Antarctique)",
+       x = "Longueur des ailes (mm)",
+       y = "Frequence")
 
 
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist4.png", hist4, dpi = 320, width = 12, height = 6)
 
-ggplot(data = pingouins,
-       aes(x = bec_lng_mm, y = bec_htr_mm)) +
-  geom_point(aes(colour = espece),
-             size = 2,
-             alpha = 0.8) +
-  geom_smooth(method = "lm",
-              aes(colour = espece),
-              se = FALSE, show.legend = FALSE) +
-  scale_colour_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(x = "Longueur du bec (mm)",
-       y = "Hauteur du bec (mm)",
-       title = "Dimensions du bec pour trois espèces de pingouins") +
-  theme_light() +
-  theme(legend.title = element_blank(),
-        legend.position = "top",
-        plot.title = element_text(hjust = 0.5))
+hist5 <- ggplot(data = pingouins,
+       aes(x = aile_lng_mm)) +
+  geom_histogram(aes(fill = espece),
+                 position = "identity",
+                 alpha = 0.5) +
+  labs(title = "Longueur des ailes de pingouins",
+       subtitle = "pour 3 espèces de l'archipel Palmer",
+       x = "Longueur des ailes (mm)",
+       y = "Frequence")
 
-# Boîtes à moustaches ----
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist5.png", hist5, dpi = 320, width = 12, height = 6)
 
-ggplot(data = pingouins,
-       aes(x = espece, y = aile_lng_mm)) +
-  geom_boxplot(aes(fill = espece), show.legend = FALSE) +
-  scale_fill_manual(values = c("darkorange", "purple", "cyan4")) +
-  labs(x = "",
-       y = "Longueur de l'aile (mm)",
-       title = "Longueur des ailes pour trois espèces de pingouins") +
-  theme_light() +
-  theme(panel.grid.major.x = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.title.y = element_text(margin = margin(r = 10)),
-        plot.title = element_text(hjust = 0.5,
-                                  margin = margin(t = 10, b = 20)))
-  
+hist6 <- ggplot(data = pingouins,
+                aes(x = aile_lng_mm)) +
+  geom_histogram(aes(fill = espece),
+                 position = "identity",
+                 alpha = 0.5) +
+  labs(title = "Longueur des ailes de pingouins",
+       subtitle = "pour 3 espèces de l'archipel Palmer",
+       x = "Longueur des ailes (mm)",
+       y = "Frequence") +
+  scale_fill_brewer(palette = "Accent")
+
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist6.png", hist6, dpi = 320, width = 12, height = 6)
+
+hist7 <- ggplot(data = pingouins,
+                aes(x = aile_lng_mm)) +
+  geom_histogram(aes(fill = espece),
+                 position = "identity",
+                 alpha = 0.5) +
+  labs(title = "Longueur des ailes de pingouins",
+       subtitle = "pour 3 espèces de l'archipel Palmer",
+       x = "Longueur des ailes (mm)",
+       y = "Frequence") +
+  scale_fill_manual(values = c("darkorange", "purple4", "cyan4"))
+
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist7.png", hist7, dpi = 320, width = 12, height = 6)
+
+hist8 <- ggplot(data = pingouins,
+                aes(x = aile_lng_mm)) +
+  geom_histogram(aes(fill = espece),
+                 position = "identity",
+                 alpha = 0.5) +
+  labs(title = "Longueur des ailes de pingouins",
+       subtitle = "pour 3 espèces de l'archipel Palmer",
+       x = "Longueur des ailes (mm)",
+       y = "Frequence") +
+  scale_fill_manual(values = c("darkorange", "purple4", "cyan4")) +
+  theme_minimal()
+
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist8.png", hist8, dpi = 320, width = 12, height = 6)
