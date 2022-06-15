@@ -146,6 +146,12 @@ ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist2.png", h2, 
                    position = "identity",
                    alpha = 0.5))
 
+ggplot(data = pingouins,
+       aes(x = aile_lng_mm)) +
+  geom_histogram(aes(fill = espece),
+                 position = "identity",
+                 alpha = 0.7)
+
 ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/hist3.png", h3, dpi = 320, width = 12, height = 6)
 
 (h4 <- ggplot(data = pingouins,
