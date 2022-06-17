@@ -593,5 +593,20 @@ ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/sp1.png", sp1, d
 
 ggplot(data = pingouins,
        aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(aes(shape = espece)) +
+  scale_shape_manual(values = c(0, 6, 8))
+
+ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
   geom_point(aes(colour = espece)) +
   scale_colour_manual(values = c("darkorange", "purple", "cyan4"))
+
+
+ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(shape = 21, colour = "firebrick", fill = "red", size = 5, stroke = 3, alpha = 0.5) 
+
+
+ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(aes(size = masse_g))
