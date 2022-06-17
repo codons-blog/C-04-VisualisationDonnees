@@ -582,3 +582,31 @@ saveGIF({
   print(p11)
   print(p12)
 }, interval = 2, movie.name = "ggplot_02.gif", ani.width = 1800, ani.height = 1050, ani.res = 300)
+
+# Scatterplot - a inclure dans le texte ----
+
+(sp1 <- ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point())
+
+ggsave("../codons.netlify/_posts/visualiser-donnees-ggplot2/img/sp1.png", sp1, dpi = 320, width = 12, height = 6)
+
+ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(aes(shape = espece)) +
+  scale_shape_manual(values = c(0, 6, 8))
+
+ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(aes(colour = espece)) +
+  scale_colour_manual(values = c("darkorange", "purple", "cyan4"))
+
+
+ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(shape = 21, colour = "firebrick", fill = "red", size = 5, stroke = 3, alpha = 0.5) 
+
+
+ggplot(data = pingouins,
+       aes(x = bec_lng_mm, y = bec_htr_mm)) +
+  geom_point(aes(size = masse_g))
