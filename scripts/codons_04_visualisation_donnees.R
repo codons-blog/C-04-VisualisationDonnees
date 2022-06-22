@@ -18,9 +18,63 @@ showtext_auto()
 
 setwd("D:/codons/C-04-VisualisationDonnees")
 
-# Importer les donnees ----
+# Importer les donnees brutes ----
 
-pingouins <- readr::read_csv("https://raw.githubusercontent.com/codons-blog/C-04-VisualisationDonnees/main/data/pingouins.csv")
+# Source : http://apte.cp.utfpr.edu.br/
+
+hordeum_tes_raw <- read_delim("data/hordeum_vulgare_TEAnnotationFinal.gff3",
+                              col_names = FALSE)
+
+# Nettoyer les donnees ----
+
+hordeum_tes_clean <- hordeum_tes_raw %>% 
+  select(chromosome = X1,
+         te_classification = X3,
+         start = X4,
+         end = X5) %>% 
+  filter(chromosome %in% 1:7) %>% 
+  mutate(chromosome = paste0(chromosome, "H")) %>% 
+  separate(col = te_classification,
+           into = c("class", "order", "superfamily"),
+           sep = "/") %>% 
+  filter(!order %in% c("Maverick", "PLE", "DIRS")) %>% 
+  mutate(class = case_when(grepl("^Class II", class) ~ "Class II",
+                           TRUE ~ as.character(class))) %>% 
+  mutate(class = na_if(class, "Unknown"),
+         order = na_if(order, "-"),
+         superfamily = na_if(superfamily, "-"),
+         size = end - start)
+
+write_csv(hordeum_tes_clean, "data/hordeum_vulgare_clean.txt")
+
+# Calculer la taille cumulee des TEs par chromosome ----
+
+d1 <- hv_tes %>% 
+  group_by(chromosome, class, order) %>% 
+  summarise(total_size = sum(size)) %>% 
+  ungroup() %>% 
+  group_by(chromosome) %>% 
+  mutate(cumul_te_size = sum(total_size)) %>% 
+  ungroup() %>% 
+  mutate(percent = 100 * total_size / cumul_te_size) %>% 
+  select(chromosome:order, percent)
+
+write_csv(d1, "data/hv_te_ratios.csv")
+
+# Rendement ----
+
+# Source : https://ourworldindata.org/crop-yields
+
+rdt <- read_csv("https://raw.githubusercontent.com/owid/owid-datasets/master/datasets/Attainable%20yields%20(Mueller%20et%20al.%202012)/Attainable%20yields%20(Mueller%20et%20al.%202012).csv")
+
+
+
+# Importer les donnees nettoyees ----
+
+hv_te <- read_csv("data/hv_te_clean.csv")
+
+  
+head(d1)
 
 # ggplot basique - etape par etape (GIF) ----
 
