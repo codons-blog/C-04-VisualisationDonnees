@@ -2,28 +2,110 @@
 # 04 - Visualisation de donnees
 # Jeudi 30/06/2022
 
-# Charger le Tidyverse ----
+# Charger les packages ----
 
-library(animation)
-library(patchwork)
-library(showtext)
+# library(animation)
+# library(patchwork)
+# library(showtext)
 library(tidyverse)
 
 # Charger les polices ----
 
-font_add_google(name = "Source Code Pro", family = "source")
-showtext_auto()
+# font_add_google(name = "Source Code Pro", family = "source")
+# showtext_auto()
 
 # Definir le repertoire de travail ----
 
 setwd("D:/codons/C-04-VisualisationDonnees")
 
-# Importer les donnees brutes ----
+# Importer les donnees ----
 
-# Source : http://apte.cp.utfpr.edu.br/
+cereales <- read_csv("data-clean/cereales.csv")
+hv_te <- read_csv("data-clean/hv_te_clean.txt")
 
-hordeum_tes_raw <- read_delim("data/hordeum_vulgare_TEAnnotationFinal.gff3",
-                              col_names = FALSE)
+# 1er type de graphique : scatter plot ----
+
+orge <- cereales %>% 
+  filter(cereale == "Orge")
+
+ggplot(data = orge) +
+  geom_line(mapping = aes(x = annee,
+                          y = tonnes / 1e6),
+            size = 1,
+            colour = "#86d4ee") +
+  # geom_point(mapping = aes(x = annee,
+  #                          y = tonnes / 1e6),
+  #            shape = 21, size = 5,
+  #            colour = "white",
+  #            fill = "#120c6e",
+  #            stroke = 3) +
+  scale_x_continuous(breaks = seq(1960, 2020, 5)) +
+  labs(title = "Production d'orge en France (1961-2018)",
+       subtitle = "en millions de tonnes",
+       x = "",
+       y = "") +
+  theme_minimal() +
+  theme(panel.background = element_rect(fill = "#1c3f55", colour = NA),
+        plot.background = element_rect(fill = "#1c3f55", colour = NA),
+        plot.title = element_text(hjust = 0.5, size = 25, colour = "#dff8f9",
+                                  margin = margin(t = 10)),
+        plot.subtitle = element_text(hjust = 0.5, size = 20, colour = "#dff8f9",
+                                     margin = margin(b = 10)),
+        plot.margin = margin(t = 10, r = 20, b = 10, l = 20),
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_line(colour = "#53839c", size = 0.05,
+                                        linetype = "dotted"),
+        axis.title = element_text(colour = "#dff8f9"),
+        axis.text = element_text(colour = "#dff8f9"))
+
+# 2e type de graphique : bar plot ----
+
+hv_te_chr <- hv_te %>% 
+  group_by(chromosome) %>% 
+  summarise(total_size = sum(size)) %>% 
+  arrange(total_size) %>% 
+  mutate(chromosome = fct_inorder(chromosome))
+
+ggplot(data = hv_te_chr) +
+  geom_bar(mapping = aes(x = chromosome,
+                         y = total_size / 1e9),
+           stat = "identity",
+           width = 0.5,
+           fill = "#86d4ee") +
+  geom_text(mapping = aes(x = chromosome,
+                          y = ((total_size + 50e6)/ 1e9),
+                          label = paste0(round(total_size / 1e9, digits = 3),  " Gb")),
+            colour = "#dff8f9") +
+  coord_flip() +
+  labs(title = "Taille cumulée des éléments transposables chez l'orge",
+       x = "", y = "") +
+  theme_minimal() +
+  theme(panel.background = element_rect(fill = "#1c3f55", colour = NA),
+        plot.background = element_rect(fill = "#1c3f55", colour = NA),
+        plot.title = element_text(hjust = 0, size = 25, colour = "#dff8f9",
+                                  margin = margin(t = 10)),
+        plot.subtitle = element_text(hjust = 0, size = 20, colour = "#dff8f9",
+                                     margin = margin(b = 10)),
+        plot.margin = margin(t = 10, r = 20, b = 10, l = 20),
+        panel.grid = element_blank(),
+        axis.title = element_text(colour = "#dff8f9"),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(colour = "#dff8f9"))
+
+ggplot(data = hv_te,
+       mapping = aes(x = chromosome, y = percent,
+                     fill = order)) +
+  geom_bar(stat = "identity") +
+  theme_minimal()
+
+ggplot(data = cereales,
+       mapping = aes(x = annee, y = tonnes,
+                     colour = cereale)) +
+  # geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks = seq(1960, 2020, 5)) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
 
 # Nettoyer les donnees ----
 
