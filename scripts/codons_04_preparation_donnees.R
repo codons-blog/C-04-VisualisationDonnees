@@ -33,17 +33,6 @@ mais <- read_csv("data-raw/maize-production.csv") %>%
   mutate(cereale = "Maïs") %>% 
   select(pays, code, annee, cereale, tonnes)
 
-# Riz
-
-riz <- read_csv("data-raw/rice-production.csv") %>%
-  rename(pays = Entity,
-         code = Code,
-         annee = Year,
-         tonnes = `Crops - Rice, paddy - 27 - Production - 5510 - tonnes`) %>% 
-  filter(pays == "France") %>% 
-  mutate(cereale = "Riz") %>% 
-  select(pays, code, annee, cereale, tonnes)
-
 # Orge
 
 orge <- read_csv("data-raw/barley-production.csv") %>%
@@ -55,20 +44,9 @@ orge <- read_csv("data-raw/barley-production.csv") %>%
   mutate(cereale = "Orge") %>% 
   select(pays, code, annee, cereale, tonnes)
 
-# Seigle
-
-seigle <- read_csv("data-raw/rye-production.csv") %>%
-  rename(pays = Entity,
-         code = Code,
-         annee = Year,
-         tonnes = `Crops - Rye - 71 - Production - 5510 - tonnes`) %>% 
-  filter(pays == "France") %>% 
-  mutate(cereale = "Seigle") %>% 
-  select(pays, code, annee, cereale, tonnes)
-
 # Regrouper l'ensemble des cereales dans un seul tableau
 
-cereales <- rbind(ble, mais, riz, orge, seigle)
+cereales <- rbind(ble, mais, orge)
 
 write_csv(cereales, "data-clean/cereales.csv")
 
