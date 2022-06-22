@@ -2,28 +2,34 @@
 # 04 - Visualisation de donnees
 # Jeudi 30/06/2022
 
-# Charger le Tidyverse ----
+# Charger les packages ----
 
-library(animation)
-library(patchwork)
-library(showtext)
+# library(animation)
+# library(patchwork)
+# library(showtext)
 library(tidyverse)
 
 # Charger les polices ----
 
-font_add_google(name = "Source Code Pro", family = "source")
-showtext_auto()
+# font_add_google(name = "Source Code Pro", family = "source")
+# showtext_auto()
 
 # Definir le repertoire de travail ----
 
 setwd("D:/codons/C-04-VisualisationDonnees")
 
-# Importer les donnees brutes ----
+# Importer les donnees ----
 
-# Source : http://apte.cp.utfpr.edu.br/
+cereales <- read_csv("data-clean/cereales.csv")
 
-hordeum_tes_raw <- read_delim("data/hordeum_vulgare_TEAnnotationFinal.gff3",
-                              col_names = FALSE)
+ggplot(data = cereales,
+       mapping = aes(x = annee, y = tonnes,
+                     colour = cereale)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous(breaks = seq(1960, 2020, 5)) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
 
 # Nettoyer les donnees ----
 
