@@ -93,7 +93,7 @@ ggplot(d1,
   geom_point()
 
 
- # Importer les donnees ----
+# Importer les donnees ----
 
 cereales <- read_csv("data-clean/cereales.csv")
 hv_te <- read_csv("data-clean/hv_te_clean.txt")
