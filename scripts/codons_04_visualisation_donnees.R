@@ -2,7 +2,7 @@
 # 04 - Visualisation de donnees
 # Jeudi 30/06/2022
 
-# Charger les packages ----
+# Charger le Tidyverse -----
 
 # library(animation)
 # library(patchwork)
@@ -18,7 +18,80 @@ library(tidyverse)
 
 setwd("D:/codons/C-04-VisualisationDonnees")
 
-# Importer les donnees ----
+# Taille de génomes eucaryotes ----
+
+# https://www.ncbi.nlm.nih.gov/genome/browse/#!/overview/
+# https://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/
+
+d1 <- read_delim("data-raw/eukaryotes.txt") %>% 
+  
+
+d1 <- read_csv("data-raw/genomes.csv") %>% 
+  select(organism = `#Organism Name`,
+         taxonomy = `Organism Groups`,
+         size_mb = `Size(Mb)`) %>% 
+  separate(col = taxonomy,
+           into = c("n1", "n2", "n3"),
+           sep = ";")
+
+d1 <- read_delim("data-raw/genomes.csv")
+
+plants <- read_delim("data-raw/eukaryotes.txt") %>% 
+  filter(Group == "Plants") %>% 
+  arrange(`#Organism/Name`)
+
+ggplot(plants) +
+  geom_point(aes(x = `Size (Mb)`, y = as.numeric(Genes)))
+
+eukarya %>% 
+  ggplot(aes(x = `Size (Mb)`, y = as.numeric(Genes))) +
+  geom_point(aes(colour = Group))
+
+plants <- read_delim("data-raw/eukaryotes.txt") %>% 
+  select(organism = `#Organism/Name`,
+         group = Group,
+         subgroup = SubGroup,
+         size_mb = `Size (Mb)`,
+         gc_pct = `GC%`,
+         genes = Genes) %>% 
+  filter(group == "Plants",
+         genes != "-") %>% 
+  mutate(gc_pct = as.numeric(gc_pct),
+         genes = as.numeric(genes))
+
+ggplot(d1, aes(x = size_mb, y = as.numeric(Genes))) +
+  geom_point(aes(colour = Group))
+
+
+
+%>% 
+  filter()
+
+d1 <- read_csv("data-raw/genomes.csv") %>% 
+  select(organism = `#Organism Name`,
+         taxonomy = `Organism Groups`,
+         size_mb = `Size(Mb)`) %>% 
+  separate(col = taxonomy,
+           into = c("n1", "n2", "n3"),
+           sep = ";")
+
+plants <- d1 %>% 
+  filter(n2 == "Plants")
+
+euk <- read_delim("data-raw/eukaryotes.txt") %>% 
+  filter(Group == "Plants")
+
+%>% 
+  select(organism, group = n1, size_mb)
+
+head(d1)
+
+ggplot(d1,
+       aes(x = size_mb, y = group)) +
+  geom_point()
+
+
+ # Importer les donnees ----
 
 cereales <- read_csv("data-clean/cereales.csv")
 hv_te <- read_csv("data-clean/hv_te_clean.txt")
