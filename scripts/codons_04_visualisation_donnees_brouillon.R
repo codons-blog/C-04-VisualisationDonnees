@@ -4,17 +4,17 @@
 
 # Charger le Tidyverse -----
 
-# library(animation)
-# library(patchwork)
-# library(showtext)
+library(animation)
+library(patchwork)
+library(showtext)
 library(tidyverse)
 
 # Définir le re
 
 # Charger les polices ----
 
-# font_add_google(name = "Source Code Pro", family = "source")
-# showtext_auto()
+font_add_google(name = "Source Code Pro", family = "source")
+showtext_auto()
 
 # Definir le repertoire de travail ----
 
@@ -240,8 +240,8 @@ head(d1)
 (f1 <- ggplot(data = pingouins))
 
 (t1 <- ggplot() +
-    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data = pingouins) + ")) +
-    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x = bec_lng_mm, y = bec_htr_mm) +")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data) + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x, y) +")) +
     geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9, label = "geom_point() + ")) +
     geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 8.5, label = "theme_light()")) +
     geom_rect(aes(xmin = 0, xmax = 0.98, ymin = 9.8, ymax = 10.2), fill = "#00a3a6", colour = NA, alpha = 0.3) +
@@ -257,14 +257,15 @@ ggsave("fig1.png", p1, dpi = 320, width = 12, height = 6)
 # 2 - aes()
 
 (f2 <- ggplot(data = pingouins) +
-  aes(x = bec_lng_mm,
+  aes(x = bec_lngr_mm,
       y = bec_htr_mm) +
+    labs(x = "", y = "") +
     theme(axis.title = element_text(size = 20),
           axis.text = element_text(size = 20)))
 
 (t2 <- ggplot() +
-    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data = pingouins) + ")) +
-    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x = bec_lng_mm, y = bec_htr_mm) +")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data) + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x, y) +")) +
     geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9, label = "geom_point() + ")) +
     geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 8.5, label = "theme_light()")) +
     geom_rect(aes(xmin = 0, xmax = 0.98, ymin = 9.3, ymax = 9.7), fill = "#00a3a6", colour = NA, alpha = 0.3) +
@@ -280,15 +281,16 @@ ggsave("fig2.png", p2, dpi = 320, width = 12, height = 6)
 # 3 - geom()
 
 (f3 <- ggplot(data = pingouins) +
-    aes(x = bec_lng_mm,
+    aes(x = bec_lngr_mm,
         y = bec_htr_mm) +
     geom_point() +
+    labs(x = "", y = "") +
     theme(axis.title = element_text(size = 20),
           axis.text = element_text(size = 20)))
 
 (t3 <- ggplot() +
-    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data = pingouins) + ")) +
-    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x = bec_lng_mm, y = bec_htr_mm) +")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data) + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x, y) +")) +
     geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9, label = "geom_point() + ")) +
     geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 8.5, label = "theme_light()")) +
     geom_rect(aes(xmin = 0, xmax = 0.98, ymin = 8.8, ymax = 9.2), fill = "#00a3a6", colour = NA, alpha = 0.3) +
@@ -304,16 +306,17 @@ ggsave("fig3.png", p3, dpi = 320, width = 12, height = 6)
 # 4 - theme()
 
 (f4 <- ggplot(data = pingouins) +
-    aes(x = bec_lng_mm,
+    aes(x = bec_lngr_mm,
         y = bec_htr_mm) +
     geom_point() +
+    labs(x = "", y = "") +
     theme_light() +
     theme(axis.title = element_text(size = 20),
           axis.text = element_text(size = 20)))
 
 (t4 <- ggplot() +
-    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data = pingouins) + ")) +
-    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x = bec_lng_mm, y = bec_htr_mm) +")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.05, y = 10, label = "ggplot(data) + ")) +
+    geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9.5, label = "aes(x, y) +")) +
     geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 9, label = "geom_point() + ")) +
     geom_text(family = "source", hjust = 0, size = 6, aes(x = 0.1, y = 8.5, label = "theme_light()")) +
     geom_rect(aes(xmin = 0, xmax = 0.98, ymin = 8.3, ymax = 8.7), fill = "#00a3a6", colour = NA, alpha = 0.3) +
