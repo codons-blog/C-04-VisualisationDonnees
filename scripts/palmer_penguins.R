@@ -11,11 +11,11 @@ library(tidyverse)
 d1 <- palmerpenguins::penguins %>% 
   select(espece = species,
          ile = island,
-         bec_lng_mm = bill_length_mm,
+         bec_lngr_mm = bill_length_mm,
          bec_htr_mm = bill_depth_mm,
-         aile_lng_mm = flipper_length_mm,
+         aile_lngr_mm = flipper_length_mm,
          masse_g = body_mass_g) %>% 
-  filter(!is.na(bec_lng_mm))
+  filter(!is.na(bec_lngr_mm))
 
 # Scatter plot ----
 

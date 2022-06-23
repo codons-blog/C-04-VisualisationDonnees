@@ -2,7 +2,7 @@
 # 04 - Visualisation de donnees
 # Jeudi 30/06/2022
 
-# Charger les packages ----
+# Charger le Tidyverse -----
 
 # library(animation)
 # library(patchwork)
